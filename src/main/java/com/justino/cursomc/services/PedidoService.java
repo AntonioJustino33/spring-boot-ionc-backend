@@ -37,7 +37,7 @@ public class PedidoService {
 	@Autowired
 	private ClienteService clienteService;
 	
-	@Autowired
+	/*@Autowired deixar comentado apenas para o ambiente de teste*/
 	private EmailService emailService;
 	
 	public Pedido find(Integer id) {
