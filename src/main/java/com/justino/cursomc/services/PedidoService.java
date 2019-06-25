@@ -14,7 +14,7 @@ import com.justino.cursomc.repositories.ItemPedidoRepository;
 import com.justino.cursomc.repositories.PagamentoRepository;
 import com.justino.cursomc.repositories.PedidoRepository;
 import com.justino.cursomc.repositories.ProdutoRepository;
-import com.justino.cursomc.services.exception.ObjectNotFoundException;
+import com.justino.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class PedidoService {

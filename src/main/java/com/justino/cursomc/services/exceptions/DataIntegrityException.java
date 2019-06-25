@@ -1,4 +1,4 @@
-package com.justino.cursomc.services.exception;
+package com.justino.cursomc.services.exceptions;
 
 public class DataIntegrityException extends RuntimeException {
 	

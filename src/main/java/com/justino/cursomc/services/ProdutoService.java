@@ -13,7 +13,7 @@ import com.justino.cursomc.domain.Categoria;
 import com.justino.cursomc.domain.Produto;
 import com.justino.cursomc.repositories.CategoriaRepository;
 import com.justino.cursomc.repositories.ProdutoRepository;
-import com.justino.cursomc.services.exception.ObjectNotFoundException;
+import com.justino.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class ProdutoService {
