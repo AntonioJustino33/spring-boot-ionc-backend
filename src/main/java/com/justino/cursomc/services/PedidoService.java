@@ -4,8 +4,12 @@ import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.justino.cursomc.domain.Cliente;
 import com.justino.cursomc.domain.ItemPedido;
 import com.justino.cursomc.domain.PagamentoComBoleto;
 import com.justino.cursomc.domain.Pedido;
@@ -13,7 +17,8 @@ import com.justino.cursomc.domain.enums.EstadoPagamento;
 import com.justino.cursomc.repositories.ItemPedidoRepository;
 import com.justino.cursomc.repositories.PagamentoRepository;
 import com.justino.cursomc.repositories.PedidoRepository;
-import com.justino.cursomc.repositories.ProdutoRepository;
+import com.justino.cursomc.security.UserSS;
+import com.justino.cursomc.services.exceptions.AuthorizationException;
 import com.justino.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -37,7 +42,7 @@ public class PedidoService {
 	@Autowired
 	private ClienteService clienteService;
 	
-	/*@Autowired deixar comentado apenas para o ambiente de teste*/
+	/*@Autowired*/
 	private EmailService emailService;
 	
 	public Pedido find(Integer id) {
@@ -65,8 +70,17 @@ public class PedidoService {
 			ip.setPedido(obj);
 		}
 		itemPedidoRepository.saveAll(obj.getItens());
-		emailService.sendOrderConfirmationHtmlEmail(obj);
+		emailService.sendOrderConfirmationEmail(obj);
 		return obj;
 	}
-
+	
+	public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		UserSS user = UserService.authenticated();
+		if (user == null) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		Cliente cliente =  clienteService.find(user.getId());
+		return repo.findByCliente(cliente, pageRequest);
+	}
 }
