@@ -42,7 +42,7 @@ public class PedidoService {
 	@Autowired
 	private ClienteService clienteService;
 	
-	/*@Autowired*/
+	@Autowired
 	private EmailService emailService;
 	
 	public Pedido find(Integer id) {
